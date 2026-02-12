@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Mark Exams - التنسيق الهرموني</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #e0e0e0;
+            --accent-color: #bb86fc;
+            --correct-color: #03dac6;
+            --wrong-color: #cf6679;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .question-box {
+            margin-bottom: 25px;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            background-color: #2c2c2c;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-label:hover {
+            background-color: #383838;
+        }
+
+        input[type="radio"] {
+            margin-left: 10px;
+            transform: scale(1.2);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: var(--accent-color);
+            color: #000;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+
+        button.submit-btn {
+            background-color: var(--correct-color);
+        }
+
+        /* Result Styles */
+        .result-screen {
+            text-align: center;
+            display: none;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid var(--accent-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            margin: 20px auto;
+        }
+
+        .review-box {
+            text-align: right;
+            margin-top: 20px;
+            border: 1px solid #444;
+            padding: 15px;
+            border-radius: 8px;
+            background: #252525;
+        }
+
+        .explanation {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: rgba(187, 134, 252, 0.1);
+            border-right: 3px solid var(--accent-color);
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .correct { border: 2px solid var(--correct-color) !important; }
+        .wrong { border: 2px solid var(--wrong-color) !important; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="quiz-container">
+    <div class="header">
+        <div>السؤال: <span id="q-number">1</span> / 20</div>
+        <div class="timer" id="timer">50:00</div>
+    </div>
+
+    <div class="question-box">
+        <div class="question-text" id="question-text">جاري تحميل السؤال...</div>
+        <div class="options" id="options-container">
+            </div>
+    </div>
+
+    <div class="controls">
+        <button id="prev-btn" onclick="prevQuestion()" disabled>السابق</button>
+        <button id="next-btn" onclick="nextQuestion()">التالي</button>
+        <button id="submit-btn" onclick="submitExam()" style="display: none;" class="submit-btn">إنهاء الامتحان</button>
+    </div>
+</div>
+
+<div class="container result-screen" id="result-container">
+    <h2>نتيجة الامتحان</h2>
+    <div class="score-circle">
+        <span id="final-score">0</span>/20
+    </div>
+    <p id="feedback-msg"></p>
+    <button onclick="location.reload()">إعادة الامتحان</button>
+    
+    <div id="review-section">
+        <h3>مراجعة الإجابات:</h3>
+        </div>
+</div>
+
+<script>
+    // 1. الداتا المستخرجة من الصور (20 سؤال)
+    const examData = [
+        {
+            id: 1,
+            text: "أي الهرمونات التالية يؤثر بشكل مباشر في عملية الولادة من خلال زيادة تقلصات عضلات الرحم؟",
+            options: ["البرولاكتين", "الأوكسيتوسين", "FSH", "LH"],
+            correct: 1, // Index start from 0
+            explanation: "الأوكسيتوسين يعمل على تنظيم تقلصات الرحم ويزيدها بشدة أثناء الولادة لإخراج الجنين."
+        },
+        {
+            id: 2,
+            text: "الغدة التي تقوم بضبط معدل الأيض الأساسي (الهدم) وتتحكم فيه هي:",
+            options: ["الغدة النخامية", "الغدة الكظرية", "الغدة الدرقية", "البنكرياس"],
+            correct: 2,
+            explanation: "هرمون الثيروكسين المفرز من الغدة الدرقية هو المسؤول عن نمو القوى العقلية وضبط معدل الأيض الأساسي."
+        },
+        {
+            id: 3,
+            text: "مرض التضخم الجحوظي (Exophthalmic Goiter) ينتج عن:",
+            options: ["نقص إفراز الثيروكسين", "زيادة إفراز الثيروكسين", "نقص اليود في الغذاء", "زيادة إفراز هرمون النمو"],
+            correct: 1,
+            explanation: "زيادة إفراز الثيروكسين تؤدي إلى التضخم الجحوظي، ومن أعراضه جحوظ العينين وزيادة ضربات القلب."
+        },
+        {
+            id: 4,
+            text: "الهرمون المسؤول عن إعادة امتصاص الماء في النفرون وتقليل كمية البول هو:",
+            options: ["الأوكسيتوسين", "ADH", "GH", "ACTH"],
+            correct: 1,
+            explanation: "هرمون ADH (المضاد لإدرار البول) يعمل على تقليل كمية البول عن طريق إعادة امتصاص الماء من النفرونات في الكلية."
+        },
+        {
+            id: 5,
+            text: "أي مما يلي يعتبر من الوظائف الأساسية لهرمون الباراثرمون؟",
+            options: ["تقليل نسبة الكالسيوم في الدم", "سحب الكالسيوم من العظام للدم عند انخفاضه", "تحفيز امتصاص الجلوكوز", "نمو الغدد الثديية"],
+            correct: 1,
+            explanation: "الباراثرمون يعمل مع الكالسيتونين للحفاظ على مستوى الكالسيوم؛ حيث يفرز عند انخفاض الكالسيوم في الدم لرفعه بسحبه من العظام."
+        },
+        {
+            id: 6,
+            text: "خلايا جزر لانجرهانز المسؤولة عن إفراز هرمون الإنسولين هي:",
+            options: ["خلايا ألفا", "خلايا بيتا", "الخلايا الحويصلية", "خلايا بينية"],
+            correct: 1,
+            explanation: "خلايا بيتا تمثل النسبة الأكبر (70%) في جزر لانجرهانز وتفرز الإنسولين لخفض سكر الدم."
+        },
+        {
+            id: 7,
+            text: "في حالة الخوف أو القتال (الطوارئ)، يفرز نخاع الغدة الكظرية هرمون:",
+            options: ["الألدوستيرون", "الكورتيزون", "الأدرينالين", "الأنسولين"],
+            correct: 2,
+            explanation: "الأدرينالين والنورأدرينالين هرمونات النجدة والطوارئ، ترفع ضغط الدم والسكر لتهيئة الجسم للمواجهة."
+        },
+        {
+            id: 8,
+            text: "الهرمون الذي يحفز الخلايا البينية في الخصية لإفراز التستوستيرون هو:",
+            options: ["FSH", "LH", "TSH", "GH"],
+            correct: 1,
+            explanation: "هرمون LH يحفز تكوين الخلايا البينية في الخصية وإفراز الهرمونات الذكرية (التستوستيرون)."
+        },
+        {
+            id: 9,
+            text: "يعتبر البنكرياس غدة مختلطة لأنه:",
+            options: ["يفرز إنزيمات هاضمة فقط", "يفرز هرمونات في الدم فقط", "يجمع بين الإفراز القنوي (إنزيمات) واللاقنوي (هرمونات)", "لا يحتوي على قنوات"],
+            correct: 2,
+            explanation: "البنكرياس له جزء قنوي (العصارة الهاضمة) وجزء لاقنوي (جزر لانجرهانز تفرز الهرمونات في الدم)."
+        },
+        {
+            id: 10,
+            text: "زيادة إفراز هرمون النمو (GH) بعد البلوغ تؤدي إلى حالة:",
+            options: ["العملقة", "القزامة", "الأكروميجيالي", "الميكسوديما"],
+            correct: 2,
+            explanation: "بعد البلوغ وتوقف نمو العظام طولياً، الزيادة في GH تسبب تضخم الأطراف وعظام الوجه (الأكروميجيالي)."
+        },
+        {
+            id: 11,
+            text: "الهرمون الذي يعمل على حفظ توازن المعادن بالجسم (الصوديوم والبوتاسيوم) هو:",
+            options: ["الكورتيزون", "الألدوستيرون", "الثيروكسين", "الأدرينالين"],
+            correct: 1,
+            explanation: "الألدوستيرون من هرمونات القشرة المعدنية، يعيد امتصاص الصوديوم ويتخلص من البوتاسيوم الزائد."
+        },
+        {
+            id: 12,
+            text: "يفرز هرمون الجاسترين من:",
+            options: ["المعدة", "الأمعاء الدقيقة", "البنكرياس", "الكبد"],
+            correct: 0,
+            explanation: "الجاسترين يفرز من المعدة وينتقل عبر الدم ليعود للمعدة ويحفزها على إفراز العصير المعدي."
+        },
+        {
+            id: 13,
+            text: "تسمى الهرمونات النباتية بـ:",
+            options: ["السترويدات", "الأوكسينات", "البروتينات", "الإنزيمات"],
+            correct: 1,
+            explanation: "الأوكسينات هي المواد الكيميائية التي تفرز من القمم النامية في النبات وتؤثر في وظائف المناطق المختلفة."
+        },
+        {
+            id: 14,
+            text: "الهرمون المسؤول عن تفجير حويصلة جراف وتحرير البويضة هو:",
+            options: ["FSH", "LH", "الأستروجين", "البروجسترون"],
+            correct: 1,
+            explanation: "هرمون LH يفرز في اليوم 14 من الدورة الشهرية ويسبب انفجار حويصلة جراف وتكوين الجسم الأصفر."
+        },
+        {
+            id: 15,
+            text: "أي الهرمونات التالية يتكون من الستيرويدات (مواد دهنية)؟",
+            options: ["الأنسولين", "التستوستيرون", "النمو", "الثيروكسين"],
+            correct: 1,
+            explanation: "هرمونات قشرة الكظر والهرمونات الجنسية (مثل التستوستيرون والأستروجين) عبارة عن ستيرويدات، بينما معظم الهرمونات الأخرى بروتينية."
+        },
+        {
+            id: 16,
+            text: "عند انخفاض نسبة السكر في الدم أثناء الصيام، يفرز البنكرياس هرمون:",
+            options: ["الأنسولين", "الجلوكاجون", "الأدرينالين", "الثيروكسين"],
+            correct: 1,
+            explanation: "الجلوكاجون يعمل عكس الأنسولين، حيث يحول الجليكوجين المخزن في الكبد إلى جلوكوز لرفع سكر الدم."
+        },
+        {
+            id: 17,
+            text: "هرمون يفرز من الفص الخلفي للغدة النخامية:",
+            options: ["GH", "TSH", "ADH", "ACTH"],
+            correct: 2,
+            explanation: "الفص الخلفي يخزن ويحرر هرمونات الجزء العصبي وهي ADH والأوكسيتوسين."
+        },
+        {
+            id: 18,
+            text: "نقص إفراز الأنسولين يؤدي إلى مرض:",
+            options: ["البول السكري", "التضخم البسيط", "تعدد البول الكاذب", "هشاشة العظام"],
+            correct: 0,
+            explanation: "نقص الأنسولين يسبب ارتفاع الجلوكوز في الدم وخروجه مع البول (البول السكري) مصحوباً بتعدد التبول والعطش."
+        },
+        {
+            id: 19,
+            text: "يعمل هرمون الكالسيتونين على:",
+            options: ["رفع كالسيوم الدم", "منع سحب الكالسيوم من العظام", "زيادة امتصاص الكالسيوم من الأمعاء", "تكسير العظام"],
+            correct: 1,
+            explanation: "الكالسيتونين يفرز من الدرقية لتقليل كالسيوم الدم عن طريق ترسيبه في العظام ومنع سحبه منها."
+        },
+        {
+            id: 20,
+            text: "الهرمون الذي ينظم دورة الطمث ويؤثر على نمو الغدد الثديية هو:",
+            options: ["البرولاكتين", "الأستروجين", "التستوستيرون", "الألدوستيرون"],
+            correct: 1,
+            explanation: "الأستروجين يفرز من حويصلة جراف وهو المسؤول عن ظهور الصفات الثانوية الأنثوية وتنظيم الطمث."
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let userAnswers = new Array(examData.length).fill(null);
+    let timeLeft = 50 * 60; // 50 minutes in seconds
+    let timerInterval;
+
+    // تهيئة الامتحان
+    function initQuiz() {
+        renderQuestion();
+        startTimer();
+    }
+
+    // عرض السؤال الحالي
+    function renderQuestion() {
+        const q = examData[currentQuestionIndex];
+        document.getElementById('q-number').innerText = currentQuestionIndex + 1;
+        document.getElementById('question-text').innerText = q.text;
+
+        const optionsContainer = document.getElementById('options-container');
+        optionsContainer.innerHTML = '';
+
+        q.options.forEach((opt, index) => {
+            const label = document.createElement('label');
+            label.className = 'option-label';
+            
+            const radio = document.createElement('input');
+            radio.type = 'radio';
+            radio.name = 'option';
+            radio.value = index;
+            radio.checked = userAnswers[currentQuestionIndex] === index;
+            radio.onchange = () => saveAnswer(index);
+
+            label.appendChild(radio);
+            label.appendChild(document.createTextNode(opt));
+            optionsContainer.appendChild(label);
+        });
+
+        // التحكم في الأزرار
+        document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+        if (currentQuestionIndex === examData.length - 1) {
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'inline-block';
+        } else {
+            document.getElementById('next-btn').style.display = 'inline-block';
+            document.getElementById('submit-btn').style.display = 'none';
+        }
+    }
+
+    // حفظ الإجابة
+    function saveAnswer(index) {
+        userAnswers[currentQuestionIndex] = index;
+    }
+
+    // التنقل
+    function nextQuestion() {
+        if (currentQuestionIndex < examData.length - 1) {
+            currentQuestionIndex++;
+            renderQuestion();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderQuestion();
+        }
+    }
+
+    // المؤقت
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').innerText = 
+                `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                submitExam();
+            }
+        }, 1000);
+    }
+
+    // إنهاء الامتحان وحساب النتيجة
+    function submitExam() {
+        clearInterval(timerInterval);
+        document.getElementById('quiz-container').style.display = 'none';
+        document.getElementById('result-container').style.display = 'block';
+
+        let score = 0;
+        const reviewSection = document.getElementById('review-section');
+
+        examData.forEach((q, i) => {
+            const userAns = userAnswers[i];
+            const isCorrect = userAns === q.correct;
+            if (isCorrect) score++;
+
+            // إنشاء بطاقة مراجعة للسؤال
+            const reviewBox = document.createElement('div');
+            reviewBox.className = 'review-box';
+            
+            // تحديد لون الحدود بناء على الإجابة
+            const borderColor = isCorrect ? 'var(--correct-color)' : 'var(--wrong-color)';
+            reviewBox.style.borderRight = `5px solid ${borderColor}`;
+
+            let status = isCorrect ? 
+                '<span style="color:var(--correct-color)">إجابة صحيحة</span>' : 
+                '<span style="color:var(--wrong-color)">إجابة خاطئة</span>';
+
+            reviewBox.innerHTML = `
+                <p><strong>س${i + 1}:</strong> ${q.text}</p>
+                <p>إجابتك: ${userAns !== null ? q.options[userAns] : 'لم يتم الحل'} (${status})</p>
+                ${!isCorrect ? `<p style="color:var(--correct-color)">الإجابة الصحيحة: ${q.options[q.correct]}</p>` : ''}
+                <div class="explanation"><strong>تفسير:</strong> ${q.explanation}</div>
+            `;
+            reviewSection.appendChild(reviewBox);
+        });
+
+        document.getElementById('final-score').innerText = score;
+        
+        // رسالة تشجيعية
+        const feedback = document.getElementById('feedback-msg');
+        if(score === 20) feedback.innerText = "ممتاز! الدرجة النهائية يا بطل! 🥇";
+        else if(score >= 15) feedback.innerText = "مستوى رائع جداً! استمر 👏";
+        else if(score >= 10) feedback.innerText = "جيد، لكن تحتاج للمراجعة أكثر 📚";
+        else feedback.innerText = "لا تقلق، راجع التفسيرات وحاول مرة أخرى 💪";
+    }
+
+    // تشغيل التطبيق
+    initQuiz();
+</script>
+
+</body>
+</html>
