@@ -2,40 +2,37 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>اختر الامتحان</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قائمة الامتحانات</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-slate-950 text-white p-6 font-['Readex_Pro']">
+<body class="bg-slate-950 text-white p-4 md:p-8 font-['Readex_Pro']">
     <div class="max-w-4xl mx-auto">
-        <h2 id="title" class="text-3xl font-bold mb-10 text-amber-500 text-center">الامتحانات المتاحة</h2>
-        <div id="list" class="grid gap-6"></div>
+        <button onclick="location.href='index.html'" class="mb-6 text-slate-500 hover:text-white transition-all">← العودة للمواد</button>
+        <h2 id="title" class="text-2xl md:text-4xl font-bold mb-10 text-amber-500 text-center"></h2>
+        <div id="list" class="grid gap-4 md:gap-6"></div>
     </div>
     <script src="main.js"></script>
     <script>
         const sub = localStorage.getItem('selectedSubject');
         const list = document.getElementById('list');
         const data = allExamsData[sub];
+        document.getElementById('title').innerText = "امتحانات " + (sub === 'biology' ? 'الأحياء' : sub);
 
         if (data && data.length > 0) {
             data.forEach((ex, i) => {
                 list.innerHTML += `
-                    <button onclick="start(${i})" class="w-full p-6 bg-slate-900 border border-slate-800 rounded-3xl text-right hover:border-amber-500 transition-all flex justify-between items-center group">
+                    <button onclick="start(${i})" class="w-full p-6 bg-slate-900 border border-slate-800 rounded-3xl text-right hover:border-amber-500 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4 group">
                         <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all text-xl">${i+1}</div>
-                            <span class="text-xl font-bold">${ex.title}</span>
+                            <div class="w-10 h-10 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all font-bold">${i+1}</div>
+                            <span class="text-lg md:text-xl font-bold">${ex.title}</span>
                         </div>
-                        <span class="text-slate-500 font-bold">20 سؤال</span>
+                        <span class="text-slate-500 bg-slate-950 px-4 py-1 rounded-full text-xs font-bold">20 سؤال • 50 دقيقة</span>
                     </button>`;
             });
-        } else {
-            list.innerHTML = "<p class='text-center text-slate-500'>قريباً جداً سيتم رفع امتحانات هذه المادة..</p>";
         }
-
-        function start(i) {
-            localStorage.setItem('currentExam', JSON.stringify(data[i]));
-            window.location.href = 'quiz-page.html';
-        }
+        function start(i) { localStorage.setItem('currentExam', JSON.stringify(data[i])); window.location.href = 'quiz-page.html'; }
     </script>
 </body>
 </html>
