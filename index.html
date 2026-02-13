@@ -1,83 +1,76 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Mark Exam</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --bg: #000000; --card: #111111; --accent: #bb86fc; 
-            --text: #ffffff; --secondary: #03dac6; --error: #cf6679;
-        }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; overflow-x: hidden; }
-        
-        /* Navbar */
-        .navbar { background: #0a0a0a; padding: 20px; display: flex; justify-content: space-between; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.5rem; font-weight: bold; color: var(--accent); letter-spacing: 1px; }
+import React from 'react';
 
-        /* General Layout */
-        .container { padding: 20px; max-width: 900px; margin: 0 auto; }
-        .hidden { display: none !important; }
-        
-        /* Subject Cards */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
-        .card { background: var(--card); border: 1px solid #222; padding: 20px; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.3s; }
-        .card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        .card i { font-size: 2.5rem; color: var(--secondary); margin-bottom: 10px; }
+const FullMarkPlatform = () => {
+  // بيانات المواد (يمكنك التعديل عليها بسهولة)
+  const subjects = [
+    { id: 'arabic', name: 'عربي', icon: '/ar.png', desc: 'كل وحدات المنهج', extra: 'شوامل', color: 'bg-yellow-400' },
+    { id: 'english', name: 'انجليزى', icon: '/en.png', desc: 'كل وحدات المنهج', extra: 'شوامل', color: 'bg-yellow-400' },
+    { id: 'french', name: 'فرنساوى', icon: '/fr.png', desc: 'الاربع وحدات', extra: 'شوامل', color: 'bg-yellow-400' },
+    { id: 'chem', name: 'كيمياء', icon: '/chem.jpg', desc: 'الخمس ابواب', extra: 'شوامل', color: 'bg-yellow-400' },
+    { id: 'phys', name: 'فيزياء', icon: '/ph.png', desc: 'كلاسيكية وحديثة', extra: 'شوامل', color: 'bg-yellow-400' },
+    { id: 'bio', name: 'احياء', icon: '/bio2.jpg', desc: 'الست ابواب', extra: 'شوامل', color: 'bg-yellow-400' },
+    { id: 'geo', name: 'جيولوجيا', icon: '/geo.png', desc: 'التلات ابواب', extra: '', color: 'bg-yellow-400' },
+  ];
 
-        /* Exam Interface */
-        .exam-box { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid #333; }
-        .option { display: block; background: #1a1a1a; padding: 15px; margin: 10px 0; border-radius: 10px; cursor: pointer; border: 1px solid transparent; transition: 0.2s; }
-        .option:hover { background: #222; border-color: #444; }
-        .timer { font-size: 1.2rem; color: var(--error); font-weight: bold; }
-        
-        /* Buttons */
-        .btn { background: var(--accent); color: #000; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 15px; }
-        .back-btn { background: transparent; color: #777; border: 1px solid #333; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-bottom: 15px; }
-    </style>
-</head>
-<body>
-
-    <nav class="navbar">
-        <div class="logo">FULL MARK EXAM</div>
-        <div id="timer-box" class="hidden"><i class="fa-solid fa-clock"></i> <span id="timer">00:00</span></div>
-    </nav>
-
-    <div class="container">
-        <div id="home">
-            <h2 style="text-align: center;">لوحة التحكم</h2>
-            <div class="grid">
-                <div class="card" onclick="showChapters('biology')"><i class="fa-solid fa-dna"></i><h3>الأحياء</h3></div>
-                <div class="card" onclick="showChapters('physics')"><i class="fa-solid fa-atom"></i><h3>الفيزياء</h3></div>
-                <div class="card" onclick="showChapters('chemistry')"><i class="fa-solid fa-flask"></i><h3>الكيمياء</h3></div>
-            </div>
+  return (
+    <div className="bg-slate-950 min-h-screen select-none relative antialiased text-white font-sans rtl">
+      {/* Header / Logo Section */}
+      <div className="flex flex-col md:flex-row items-center justify-end w-full gap-4 p-4 relative">
+        <div className="flex place-items-center text-yellow-500 text-5xl p-3 rounded-t-2xl rounded-l-2xl">
+          <img src="/check.png" className="animate-pulse" width="60" height="60" alt="Check Icon" />
+          <h2 className="font-bold text-5xl mr-2 bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+            Full Mark Exam
+          </h2>
         </div>
+      </div>
 
-        <div id="chapter-list" class="hidden">
-            <button class="back-btn" onclick="showHome()"> <i class="fa-solid fa-arrow-right"></i> رجوع</button>
-            <h2 id="subject-title"></h2>
-            <div id="chapters-container"></div>
-        </div>
+      {/* Hero Section */}
+      <div id="subs" className="px-4 mt-1 sm:px-6 lg:px-8">
+        <h3 className="flex justify-center cursor-default items-center m-auto gap-2 text-4xl sm:text-6xl lg:text-7xl text-white text-center">
+          <div className="relative flex gap-4 justify-center items-center flex-wrap">
+            <span className="relative font-black">يلا</span>
+            <span className="relative font-black">امتحن</span>
+            <span className="relative font-black text-yellow-400">دلوقتي</span>
+          </div>
+          {/* Flame Icon */}
+          <svg stroke="currentColor" fill="currentColor" viewBox="0 0 448 512" className="text-3xl sm:text-5xl lg:text-6xl text-red-500 animate-bounce" height="1em" width="1em">
+            <path d="M323.56 51.2c-20.8 19.3-39.58 39.59-56.22 59.97C240.08 73.62 206.28 35.53 168 0 69.74 91.17 0 209.96 0 281.6 0 408.85 100.29 512 224 512s224-103.15 224-230.4c0-53.27-51.98-163.14-124.44-230.4zm-19.47 340.65C282.43 407.01 255.72 416 226.86 416 154.71 416 96 368.26 96 290.75c0-38.61 24.31-72.63 72.79-130.75 6.93 7.98 98.83 125.34 98.83 125.34l58.63-66.88c4.14 6.85 7.91 13.55 11.27 19.97 27.35 52.19 15.81 118.97-33.43 153.42z"></path>
+          </svg>
+        </h3>
 
-        <div id="exam-screen" class="hidden">
-            <div class="exam-box">
-                <h3 id="q-text">السؤال يظهر هنا...</h3>
-                <div id="options-container"></div>
-                <button class="btn" onclick="submitAnswer()">التالي</button>
-            </div>
-        </div>
+        {/* Subjects Grid */}
+        <div className="p-3 m-3 mt-7 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
+          {subjects.map((subject) => (
+            <a key={subject.id} href={`/quiz/${subject.id}`} className="group">
+              <div className={`relative h-fit bg-paton hover:outline-none cursor-pointer hover:brightness-110 bg-repeat bg-center bg-cover hover:scale-105 transition-transform duration-500 w-full p-4 sm:p-6 lg:p-8 rounded-xl shadow-2xl outline-dashed outline-offset-4 outline-yellow-300 ${subject.color}`}>
+                <div className="text-center">
+                  <img 
+                    alt={subject.name} 
+                    src={subject.icon} 
+                    className="group-hover:scale-90 mx-auto flex transition-transform duration-300 w-32 h-32 object-contain" 
+                  />
+                  <h3 className="text-slate-900 text-6xl font-bold mt-4">{subject.name}</h3>
+                  
+                  <div className="mt-4 bg-slate-900/20 rounded-xl p-2 inline-block outline-dashed outline-1 outline-slate-800">
+                    <h2 className="text-slate-800 text-lg font-bold">{subject.desc}</h2>
+                    {subject.extra && <h2 className="text-slate-800 text-lg font-bold">{subject.extra}</h2>}
+                  </div>
 
-        <div id="result-screen" class="hidden">
-            <div class="exam-box" style="text-align: center;">
-                <h2>انتهى الامتحان</h2>
-                <h1 id="score-text" style="color: var(--secondary);">0 / 0</h1>
-                <div id="review-area" style="text-align: right; margin-top: 20px;"></div>
-                <button class="btn" onclick="showHome()">العودة للرئيسية</button>
-            </div>
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/60 rounded-xl opacity-0 group-hover:opacity-100 transition duration-300">
+                    <div className="text-center">
+                       <span className="text-5xl block mb-2">📝</span>
+                       <span className="text-white text-3xl font-bold">ابدأ الامتحان</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))}
         </div>
+      </div>
     </div>
+  );
+};
 
-    <script src="logic.js"></script>
-    </body>
-</html>
+export default FullMarkPlatform;
