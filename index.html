@@ -3,78 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Mark Exam | طريقك للدرجة النهائية</title>
+    <title>Full Mark Exam | احترافية بلا حدود</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; background-color: #020617; }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+        body { font-family: 'Tajawal', sans-serif; background: radial-gradient(circle at top, #0f172a 0%, #020617 100%); }
+        .subject-card {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .glass-card:hover {
-            background: rgba(250, 204, 21, 0.1);
-            border-color: #facc15;
-            transform: translateY(-10px);
+        .subject-card:hover {
+            transform: translateY(-8px);
+            border-color: #fbbf24;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(251, 191, 36, 0.1);
         }
-        .text-gradient {
-            background: linear-gradient(to right, #facc15, #eab308);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .btn-premium {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);
         }
     </style>
 </head>
-<body class="text-white overflow-x-hidden">
+<body class="text-slate-200 min-h-screen">
 
-    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
-        <div class="text-3xl font-900 text-gradient tracking-tighter">FULL MARK EXAM</div>
-        <div class="bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-bold animate-pulse">النظام الحديث 2026</div>
+    <nav class="p-8 flex justify-between items-center max-w-6xl mx-auto">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-yellow-400 rounded-lg flex items-center justify-center text-slate-900 font-black text-xl">F</div>
+            <span class="text-2xl font-black tracking-tight text-white">FULLMARK<span class="text-yellow-400">.</span></span>
+        </div>
+        <div class="hidden md:block text-slate-400 text-sm font-medium">نظام التقييم الحديث 2026</div>
     </nav>
 
-    <header class="text-center py-16 px-4">
-        <h1 class="text-5xl md:text-7xl font-900 mb-6">يلا امتحن <span class="text-yellow-400">دلوقتي</span> 🔥</h1>
-        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
-            منصة "Full Mark" تضعك على طريق الدرجة النهائية من خلال امتحانات شاملة تحاكي امتحان نهاية العام.
-        </p>
+    <header class="text-center py-20 px-6">
+        <span class="bg-yellow-400/10 text-yellow-400 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-6 inline-block">مستقبلك يبدأ من هنا</span>
+        <h1 class="text-5xl md:text-7xl font-900 text-white mb-8 leading-tight">استعد للامتحان <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-yellow-500">بذكاء واحترافية</span></h1>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">أول منصة مصرية توفر امتحانات شاملة بنظام الأسئلة المتحررة، مصممة خصيصاً لتعطيك تجربة امتحان نهاية العام الحقيقية.</p>
     </header>
 
-    <section class="max-w-7xl mx-auto px-6 pb-20">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
-                <div class="absolute -right-4 -top-4 text-9xl opacity-5 group-hover:opacity-10 transition-opacity">ع</div>
-                <h3 class="text-3xl font-bold mb-2">اللغة العربية</h3>
-                <p class="text-gray-400 mb-6 text-sm">كل وحدات المنهج + شوامل الوزارة</p>
-                <a href="/arabic-exam" class="block text-center bg-yellow-400 text-black font-bold py-3 rounded-xl hover:bg-yellow-500 transition-colors">ابدأ الامتحان الآن</a>
+    <section class="max-w-6xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="subject-card p-10 rounded-[2.5rem] flex flex-col items-center text-center">
+            <div class="w-20 h-20 bg-yellow-400/10 rounded-3xl flex items-center justify-center mb-6">
+                <span class="text-4xl">📚</span>
             </div>
+            <h3 class="text-2xl font-bold text-white mb-3">اللغة العربية</h3>
+            <p class="text-slate-400 text-sm mb-8 leading-relaxed">60 سؤال شامل تغطي (النحو، البلاغة، الأدب، والنصوص المتحررة)</p>
+            <button class="btn-premium w-full text-slate-950 font-bold py-4 rounded-2xl hover:scale-[1.02] transition-transform">ابدأ الاختبار الشامل</button>
+        </div>
 
-            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group border-l-4 border-l-yellow-400">
-                <div class="absolute -right-4 -top-4 text-9xl opacity-5 group-hover:opacity-10 transition-opacity">K</div>
-                <h3 class="text-3xl font-bold mb-2">الكيمياء</h3>
-                <p class="text-gray-400 mb-6 text-sm">الخمس أبواب + مفاهيم الكيمياء</p>
-                <a href="/chem-exam" class="block text-center border-2 border-yellow-400 text-yellow-400 font-bold py-3 rounded-xl hover:bg-yellow-400 hover:text-black transition-all">فتح الامتحانات</a>
+        <div class="subject-card p-10 rounded-[2.5rem] flex flex-col items-center text-center">
+            <div class="w-20 h-20 bg-blue-400/10 rounded-3xl flex items-center justify-center mb-6 border border-blue-400/20">
+                <span class="text-4xl">🧪</span>
             </div>
+            <h3 class="text-2xl font-bold text-white mb-3">الكيمياء</h3>
+            <p class="text-slate-400 text-sm mb-8 leading-relaxed">اختبارات على الأبواب الخمسة مع التركيز على الكيمياء العضوية</p>
+            <button class="bg-slate-700 w-full text-white font-bold py-4 rounded-2xl hover:bg-slate-600 transition-all">فتح الامتحانات</button>
+        </div>
 
-            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
-                <div class="absolute -right-4 -top-4 text-9xl opacity-5 group-hover:opacity-10 transition-opacity">P</div>
-                <h3 class="text-3xl font-bold mb-2">الفيزياء</h3>
-                <p class="text-gray-400 mb-6 text-sm">كلاسيكية وحديثة - نظام مطور</p>
-                <a href="/phys-exam" class="block text-center bg-white text-black font-bold py-3 rounded-xl hover:bg-yellow-400 transition-all">ابدأ الآن</a>
+        <div class="subject-card p-10 rounded-[2.5rem] flex flex-col items-center text-center">
+            <div class="w-20 h-20 bg-red-400/10 rounded-3xl flex items-center justify-center mb-6">
+                <span class="text-4xl">⚡</span>
             </div>
+            <h3 class="text-2xl font-bold text-white mb-3">الفيزياء</h3>
+            <p class="text-slate-400 text-sm mb-8 leading-relaxed">مسائل مستويات عليا على الكهربية والفيزياء الحديثة</p>
+            <button class="bg-slate-700 w-full text-white font-bold py-4 rounded-2xl hover:bg-slate-600 transition-all">فتح الامتحانات</button>
+        </div>
 
-            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
-                <h3 class="text-3xl font-bold mb-2 text-yellow-400">English</h3>
-                <p class="text-gray-400 mb-6 text-sm">All Units + Skills & Drama</p>
-                <a href="/en-exam" class="block text-center bg-slate-800 text-white font-bold py-3 rounded-xl hover:bg-yellow-400 hover:text-black transition-all">Start Quiz</a>
-            </div>
-
-            </div>
     </section>
 
-    <footer class="text-center py-10 border-t border-white/5 text-gray-500 text-sm">
-        جميع الحقوق محفوظة لمنصة Full Mark Exam &copy; 2026
+    <footer class="text-center py-12 border-t border-slate-800/50">
+        <p class="text-slate-500 text-sm">تطوير فريق FullMark &copy; 2026</p>
     </footer>
 
 </body>
