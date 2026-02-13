@@ -3,85 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Mark Exam | المنصة الكاملة</title>
+    <title>Full Mark Exam | الرئيسية</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Readex Pro', sans-serif; background-color: #020617; }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease-in-out;
-        }
-        .glass-card:hover {
-            transform: translateY(-5px);
-            border-color: #f59e0b;
-        }
+        .subject-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .subject-card:hover { transform: translateY(-5px); border-color: #fbbf24; }
     </style>
 </head>
-<body class="text-slate-200">
-
+<body class="text-white">
     <nav class="p-6 max-w-7xl mx-auto flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-white">FULL MARK<span class="text-amber-500">.</span></h1>
-        <div class="text-xs text-slate-500 border border-slate-800 px-3 py-1 rounded-full">ثانوية عامة 2026</div>
+        <h1 class="text-3xl font-bold text-amber-500 tracking-tighter">FULL MARK EXAM</h1>
+        <span class="bg-amber-500/10 text-amber-500 px-4 py-1 rounded-full text-xs font-bold">2026 EDITION</span>
     </nav>
 
-    <main class="max-w-7xl mx-auto px-6 py-12">
-        <h2 class="text-4xl font-bold text-center mb-12">اختر <span class="text-amber-500">المادة</span> لبدء الامتحان</h2>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <div class="text-4xl mb-4">📖</div>
-                <h3 class="text-xl font-bold mb-2">اللغة العربية</h3>
-                <p class="text-slate-400 text-xs mb-6">كل وحدات المنهج + شوامل</p>
-                <button onclick="startExam('arabic')" class="w-full py-3 bg-amber-500 text-slate-900 rounded-xl font-bold text-sm">ابدأ الآن</button>
-            </div>
+    <header class="text-center py-16">
+        <h2 class="text-5xl font-bold mb-4 text-white">يلا امتحن <span class="text-amber-500">دلوقتي</span> 🔥</h2>
+        <p class="text-slate-400">اختر المادة وابدأ طريقك نحو الدرجة النهائية</p>
+    </header>
 
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <div class="text-4xl mb-4">🇬🇧</div>
-                <h3 class="text-xl font-bold mb-2">اللغة الإنجليزية</h3>
-                <p class="text-slate-400 text-xs mb-6">Units + Comprehensive Exams</p>
-                <button onclick="startExam('english')" class="w-full py-3 bg-amber-500 text-slate-900 rounded-xl font-bold text-sm">ابدأ الآن</button>
-            </div>
-
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <div class="text-4xl mb-4">🧪</div>
-                <h3 class="text-xl font-bold mb-2">الكيمياء</h3>
-                <p class="text-slate-400 text-xs mb-6">الخمس أبواب كاملة</p>
-                <button onclick="startExam('chemistry')" class="w-full py-3 border border-amber-500 text-amber-500 rounded-xl font-bold text-sm hover:bg-amber-500 hover:text-slate-900 transition-all">ابدأ الآن</button>
-            </div>
-
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <div class="text-4xl mb-4">⚡</div>
-                <h3 class="text-xl font-bold mb-2">الفيزياء</h3>
-                <p class="text-slate-400 text-xs mb-6">كلاسيكية وحديثة</p>
-                <button onclick="startExam('physics')" class="w-full py-3 border border-amber-500 text-amber-500 rounded-xl font-bold text-sm hover:bg-amber-500 hover:text-slate-900 transition-all">ابدأ الآن</button>
-            </div>
-
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <div class="text-4xl mb-4">🧬</div>
-                <h3 class="text-xl font-bold mb-2">الأحياء</h3>
-                <p class="text-slate-400 text-xs mb-6">الست أبواب كاملة</p>
-                <button onclick="startExam('biology')" class="w-full py-3 bg-slate-800 text-white rounded-xl font-bold text-sm">ابدأ الآن</button>
-            </div>
-
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <div class="text-4xl mb-4">🇫🇷</div>
-                <h3 class="text-xl font-bold mb-2">اللغة الفرنسية</h3>
-                <p class="text-slate-400 text-xs mb-6">الأربع وحدات</p>
-                <button onclick="startExam('french')" class="w-full py-3 bg-slate-800 text-white rounded-xl font-bold text-sm">ابدأ الآن</button>
-            </div>
-
-            <div class="glass-card p-6 rounded-3xl text-center">
-                <div class="text-4xl mb-4">🌋</div>
-                <h3 class="text-xl font-bold mb-2">الجيولوجيا</h3>
-                <p class="text-slate-400 text-xs mb-6">الأبواب والعلوم البيئية</p>
-                <button onclick="startExam('geology')" class="w-full py-3 bg-slate-800 text-white rounded-xl font-bold text-sm">ابدأ الآن</button>
-            </div>
-
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pb-20">
+        <div class="subject-card p-8 rounded-3xl text-center">
+            <div class="text-5xl mb-4">🧬</div>
+            <h3 class="text-2xl font-bold mb-2">الأحياء</h3>
+            <p class="text-slate-400 text-sm mb-6">امتحان شامل على الدعامة والحركة</p>
+            <button onclick="startBiology()" class="w-full py-3 bg-amber-500 text-slate-900 font-bold rounded-xl hover:bg-amber-400">ابدأ الامتحان</button>
         </div>
-    </main>
+        </div>
+
+    <script src="main.js"></script>
 </body>
 </html>
