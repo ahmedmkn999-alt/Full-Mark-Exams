@@ -3,100 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Mark Exam | تميز باحترافية</title>
+    <title>Full Mark Exam | المنصة الكاملة</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;600;700&family=Outfit:wght@700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --font-arabic: 'IBM Plex Sans Arabic', sans-serif;
-            --font-english: 'Outfit', sans-serif;
-        }
-        body { 
-            font-family: var(--font-arabic); 
-            background-color: #020617;
-            background-image: radial-gradient(circle at 50% -20%, #1e293b 0%, #020617 80%);
-        }
-        .premium-card {
+        body { font-family: 'Readex Pro', sans-serif; background-color: #020617; }
+        .glass-card {
             background: rgba(30, 41, 59, 0.4);
-            backdrop-filter: blur(16px);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s ease;
+            transition: all 0.3s ease-in-out;
         }
-        .premium-card:hover {
-            border-color: rgba(245, 158, 11, 0.4);
+        .glass-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            border-color: #f59e0b;
         }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #fff 0%, #f59e0b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .eng-font { font-family: var(--font-english); }
     </style>
 </head>
-<body class="text-slate-200 antialiased">
+<body class="text-slate-200">
 
-    <nav class="max-w-6xl mx-auto p-6 flex justify-between items-center">
-        <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center text-slate-900 font-black eng-font">F</div>
-            <span class="text-xl font-bold tracking-tighter text-white eng-font">FULLMARK<span class="text-amber-500">.</span></span>
-        </div>
-        <div class="px-4 py-1.5 rounded-full border border-slate-700 text-xs font-medium text-slate-400 bg-slate-900/50">
-            v2.0 Beta • 2026
-        </div>
+    <nav class="p-6 max-w-7xl mx-auto flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-white">FULL MARK<span class="text-amber-500">.</span></h1>
+        <div class="text-xs text-slate-500 border border-slate-800 px-3 py-1 rounded-full">ثانوية عامة 2026</div>
     </nav>
 
-    <section class="max-w-4xl mx-auto text-center pt-20 pb-16 px-6">
-        <h1 class="text-4xl md:text-6xl font-700 mb-6 leading-tight">
-            طريقك للدرجة النهائية <br> 
-            <span class="gold-gradient-text">بأحدث معايير التقييم</span>
-        </h1>
-        <p class="text-slate-400 text-lg md:text-xl font-300 leading-relaxed mb-10">
-            نقدم لك تجربة امتحانات شاملة تحاكي النظام الحديث، مصممة بدقة لتطوير مهاراتك الذهنية.
-        </p>
-    </section>
-
-    <section class="max-w-6xl mx-auto px-6 pb-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <h2 class="text-4xl font-bold text-center mb-12">اختر <span class="text-amber-500">المادة</span> لبدء الامتحان</h2>
         
-        <div class="premium-card p-8 rounded-[2rem] relative group">
-            <div class="mb-6 w-14 h-14 bg-amber-500/10 rounded-2xl flex items-center justify-center text-2xl border border-amber-500/20">
-                📖
-            </div>
-            <h3 class="text-2xl font-bold text-white mb-2">اللغة العربية</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-8">نصوص متحررة، بلاغة، ونحو تراكمي وفق أحدث مواصفات الوزارة.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            <button class="w-full py-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-900 font-700 text-sm hover:opacity-90 transition-all shadow-lg shadow-amber-500/20">
-                ابدأ الاختبار الشامل
-            </button>
-        </div>
-
-        <div class="premium-card p-8 rounded-[2rem] relative group">
-            <div class="mb-6 w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center text-2xl border border-blue-500/20">
-                ⚡
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <div class="text-4xl mb-4">📖</div>
+                <h3 class="text-xl font-bold mb-2">اللغة العربية</h3>
+                <p class="text-slate-400 text-xs mb-6">كل وحدات المنهج + شوامل</p>
+                <button onclick="startExam('arabic')" class="w-full py-3 bg-amber-500 text-slate-900 rounded-xl font-bold text-sm">ابدأ الآن</button>
             </div>
-            <h3 class="text-2xl font-bold text-white mb-2">الفيزياء</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-8">تطبيقات عملية ومسائل مستويات عليا على الكهربية والحديثة.</p>
-            
-            <button class="w-full py-4 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-300 font-600 text-sm transition-all">
-                قريباً
-            </button>
-        </div>
 
-        <div class="premium-card p-8 rounded-[2rem] relative group">
-            <div class="mb-6 w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center text-2xl border border-emerald-500/20">
-                🧪
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <div class="text-4xl mb-4">🇬🇧</div>
+                <h3 class="text-xl font-bold mb-2">اللغة الإنجليزية</h3>
+                <p class="text-slate-400 text-xs mb-6">Units + Comprehensive Exams</p>
+                <button onclick="startExam('english')" class="w-full py-3 bg-amber-500 text-slate-900 rounded-xl font-bold text-sm">ابدأ الآن</button>
             </div>
-            <h3 class="text-2xl font-bold text-white mb-2">الكيمياء</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-8">شامل الكيمياء العضوية وغير العضوية مع رسومات بيانية تفاعلية.</p>
-            
-            <button class="w-full py-4 rounded-xl border border-slate-700 hover:border-slate-500 text-slate-300 font-600 text-sm transition-all">
-                قريباً
-            </button>
+
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <div class="text-4xl mb-4">🧪</div>
+                <h3 class="text-xl font-bold mb-2">الكيمياء</h3>
+                <p class="text-slate-400 text-xs mb-6">الخمس أبواب كاملة</p>
+                <button onclick="startExam('chemistry')" class="w-full py-3 border border-amber-500 text-amber-500 rounded-xl font-bold text-sm hover:bg-amber-500 hover:text-slate-900 transition-all">ابدأ الآن</button>
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <div class="text-4xl mb-4">⚡</div>
+                <h3 class="text-xl font-bold mb-2">الفيزياء</h3>
+                <p class="text-slate-400 text-xs mb-6">كلاسيكية وحديثة</p>
+                <button onclick="startExam('physics')" class="w-full py-3 border border-amber-500 text-amber-500 rounded-xl font-bold text-sm hover:bg-amber-500 hover:text-slate-900 transition-all">ابدأ الآن</button>
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <div class="text-4xl mb-4">🧬</div>
+                <h3 class="text-xl font-bold mb-2">الأحياء</h3>
+                <p class="text-slate-400 text-xs mb-6">الست أبواب كاملة</p>
+                <button onclick="startExam('biology')" class="w-full py-3 bg-slate-800 text-white rounded-xl font-bold text-sm">ابدأ الآن</button>
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <div class="text-4xl mb-4">🇫🇷</div>
+                <h3 class="text-xl font-bold mb-2">اللغة الفرنسية</h3>
+                <p class="text-slate-400 text-xs mb-6">الأربع وحدات</p>
+                <button onclick="startExam('french')" class="w-full py-3 bg-slate-800 text-white rounded-xl font-bold text-sm">ابدأ الآن</button>
+            </div>
+
+            <div class="glass-card p-6 rounded-3xl text-center">
+                <div class="text-4xl mb-4">🌋</div>
+                <h3 class="text-xl font-bold mb-2">الجيولوجيا</h3>
+                <p class="text-slate-400 text-xs mb-6">الأبواب والعلوم البيئية</p>
+                <button onclick="startExam('geology')" class="w-full py-3 bg-slate-800 text-white rounded-xl font-bold text-sm">ابدأ الآن</button>
+            </div>
+
         </div>
-
-    </section>
-
+    </main>
 </body>
 </html>
