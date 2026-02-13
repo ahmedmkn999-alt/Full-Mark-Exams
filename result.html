@@ -2,62 +2,37 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>النتيجة النهائية | Full Mark</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>النتيجة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-slate-950 text-white p-6 font-['Readex_Pro']">
-    <div class="max-w-4xl mx-auto text-center">
-        <div class="mb-10 p-10 bg-slate-900 rounded-[3rem] border border-slate-800 shadow-2xl">
-            <h1 class="text-3xl font-bold text-amber-500 mb-6">نتيجة الامتحان الشامل</h1>
-            <div id="score-box" class="text-8xl font-black mb-4 tracking-tighter text-white">0</div>
-            <p id="feedback" class="text-slate-400 text-xl font-bold"></p>
+<body class="bg-slate-950 text-white p-4 md:p-8 font-['Readex_Pro']">
+    <div class="max-w-3xl mx-auto text-center">
+        <div class="p-8 md:p-12 bg-slate-900 rounded-[3rem] border border-slate-800 mb-8">
+            <h1 class="text-xl md:text-2xl font-bold text-amber-500 mb-4">درجتك النهائية</h1>
+            <div id="score" class="text-7xl md:text-9xl font-black mb-4">0</div>
+            <p id="msg" class="text-slate-400 font-bold"></p>
         </div>
-
-        <h2 class="text-2xl font-bold mb-8 text-right border-r-4 border-amber-500 pr-4">مراجعة الأسئلة والإجابات:</h2>
-        <div id="review-list" class="space-y-6 text-right pb-20"></div>
-
-        <button onclick="location.href='index.html'" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-12 py-4 bg-amber-500 text-slate-900 font-black rounded-2xl shadow-2xl hover:scale-105 transition-all">العودة للرئيسية</button>
+        <div id="review" class="space-y-4 text-right"></div>
+        <button onclick="location.href='index.html'" class="mt-10 w-full py-4 bg-amber-500 text-slate-900 font-bold rounded-2xl">العودة للرئيسية</button>
     </div>
-
     <script>
-        const exam = JSON.parse(localStorage.getItem('currentExam'));
-        const userAns = JSON.parse(localStorage.getItem('results'));
-        let score = 0;
-        let html = '';
-
-        exam.questions.forEach((q, i) => {
-            const correctIdx = q.correct;
-            const userIdx = userAns[i];
-            const isCorrect = userIdx === correctIdx;
-            if(isCorrect) score++;
-
-            html += `
-                <div class="p-8 rounded-[2rem] border ${isCorrect ? 'border-green-500/30 bg-green-500/5' : 'border-red-500/30 bg-red-500/5'}">
-                    <div class="flex justify-between items-start mb-4">
-                        <span class="bg-slate-800 px-4 py-1 rounded-full text-xs font-bold">${isCorrect ? '✅ صحيح' : '❌ خطأ'}</span>
-                        <span class="font-bold text-lg">سؤال ${i+1}</span>
-                    </div>
-                    <p class="text-xl font-bold mb-6 leading-relaxed">${q.q}</p>
-                    <div class="grid gap-2 mb-6">
-                        <p class="p-4 rounded-xl bg-slate-900 border border-slate-800">إجابتك: <span class="${isCorrect ? 'text-green-500' : 'text-red-500'} font-bold">${q.options[userIdx]}</span></p>
-                        ${!isCorrect ? `<p class="p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-500 font-bold">الإجابة الصحيحة: ${q.options[correctIdx]}</p>` : ''}
-                    </div>
-                    <div class="p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-                        <p class="text-sm text-amber-500 leading-relaxed">💡 <span class="font-bold">التفسير:</span> ${q.hint}</p>
-                    </div>
-                </div>
-            `;
+        const ex = JSON.parse(localStorage.getItem('currentExam'));
+        const u = JSON.parse(localStorage.getItem('results'));
+        let s = 0; let h = '';
+        ex.questions.forEach((q, i) => {
+            const correct = u[i] === q.correct; if(correct) s++;
+            h += `
+                <div class="p-6 rounded-2xl border ${correct ? 'border-green-900/50 bg-green-950/20' : 'border-red-900/50 bg-red-950/20'}">
+                    <p class="font-bold mb-3">${i+1}- ${q.q}</p>
+                    <p class="text-sm ${correct ? 'text-green-500' : 'text-red-500'} font-bold">إجابتك: ${q.options[u[i]]}</p>
+                    ${!correct ? `<p class="text-sm text-green-500 font-bold">الصح: ${q.options[q.correct]}</p>` : ''}
+                    <p class="mt-3 text-xs text-slate-500 p-2 bg-slate-900/50 rounded-lg">💡 التفسير: ${q.hint}</p>
+                </div>`;
         });
-
-        document.getElementById('score-box').innerText = `${score} / ${exam.questions.length}`;
-        document.getElementById('review-list').innerHTML = html;
-        
-        const percent = (score / exam.questions.length) * 100;
-        const feedbackEl = document.getElementById('feedback');
-        if(percent >= 85) feedbackEl.innerText = "ممتاز! أنت مشروع دكتور حقيقي 🩺";
-        else if(percent >= 65) feedbackEl.innerText = "جيد جداً، ركز أكتر في المراجعة 📚";
-        else feedbackEl.innerText = "محتاج تشد حيلك أكتر في الجزء ده ✍️";
+        document.getElementById('score').innerText = `${s}/${ex.questions.length}`;
+        document.getElementById('review').innerHTML = h;
     </script>
 </body>
 </html>
