@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>اختر الامتحان</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-950 text-white p-6 font-['Readex_Pro']">
+    <div class="max-w-4xl mx-auto">
+        <h2 id="title" class="text-3xl font-bold mb-10 text-amber-500 text-center">الامتحانات المتاحة</h2>
+        <div id="list" class="grid gap-6"></div>
+    </div>
+    <script src="main.js"></script>
+    <script>
+        const sub = localStorage.getItem('selectedSubject');
+        const list = document.getElementById('list');
+        const data = allExamsData[sub];
+
+        if (data && data.length > 0) {
+            data.forEach((ex, i) => {
+                list.innerHTML += `
+                    <button onclick="start(${i})" class="w-full p-6 bg-slate-900 border border-slate-800 rounded-3xl text-right hover:border-amber-500 transition-all flex justify-between items-center group">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-amber-500/10 rounded-2xl flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-slate-900 transition-all text-xl">${i+1}</div>
+                            <span class="text-xl font-bold">${ex.title}</span>
+                        </div>
+                        <span class="text-slate-500 font-bold">20 سؤال</span>
+                    </button>`;
+            });
+        } else {
+            list.innerHTML = "<p class='text-center text-slate-500'>قريباً جداً سيتم رفع امتحانات هذه المادة..</p>";
+        }
+
+        function start(i) {
+            localStorage.setItem('currentExam', JSON.stringify(data[i]));
+            window.location.href = 'quiz-page.html';
+        }
+    </script>
+</body>
+</html>
