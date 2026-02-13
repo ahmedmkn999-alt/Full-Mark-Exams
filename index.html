@@ -2,36 +2,57 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Full Mark Exam | الرئيسية</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Readex Pro', sans-serif; background-color: #020617; }
-        .subject-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .subject-card { background: rgba(30, 41, 59, 0.5); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; cursor: pointer; }
         .subject-card:hover { transform: translateY(-5px); border-color: #fbbf24; }
     </style>
 </head>
 <body class="text-white">
     <nav class="p-6 max-w-7xl mx-auto flex justify-between items-center">
-        <h1 class="text-3xl font-bold text-amber-500 tracking-tighter">FULL MARK EXAM</h1>
-        <span class="bg-amber-500/10 text-amber-500 px-4 py-1 rounded-full text-xs font-bold">2026 EDITION</span>
+        <h1 class="text-3xl font-bold text-amber-500">FULL MARK EXAM</h1>
     </nav>
 
-    <header class="text-center py-16">
-        <h2 class="text-5xl font-bold mb-4 text-white">يلا امتحن <span class="text-amber-500">دلوقتي</span> 🔥</h2>
-        <p class="text-slate-400">اختر المادة وابدأ طريقك نحو الدرجة النهائية</p>
-    </header>
-
-    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pb-20">
-        <div class="subject-card p-8 rounded-3xl text-center">
+    <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-10">
+        <div onclick="goToExams('arabic')" class="subject-card p-8 rounded-3xl text-center">
+            <div class="text-5xl mb-4">📖</div>
+            <h3 class="text-2xl font-bold">اللغة العربية</h3>
+        </div>
+        <div onclick="goToExams('english')" class="subject-card p-8 rounded-3xl text-center">
+            <div class="text-5xl mb-4">🇬🇧</div>
+            <h3 class="text-2xl font-bold">اللغة الإنجليزية</h3>
+        </div>
+        <div onclick="goToExams('biology')" class="subject-card p-8 rounded-3xl text-center border-amber-500/50">
             <div class="text-5xl mb-4">🧬</div>
-            <h3 class="text-2xl font-bold mb-2">الأحياء</h3>
-            <p class="text-slate-400 text-sm mb-6">امتحان شامل على الدعامة والحركة</p>
-            <button onclick="startBiology()" class="w-full py-3 bg-amber-500 text-slate-900 font-bold rounded-xl hover:bg-amber-400">ابدأ الامتحان</button>
+            <h3 class="text-2xl font-bold">الأحياء</h3>
         </div>
+        <div onclick="goToExams('physics')" class="subject-card p-8 rounded-3xl text-center">
+            <div class="text-5xl mb-4">⚡</div>
+            <h3 class="text-2xl font-bold">الفيزياء</h3>
         </div>
+        <div onclick="goToExams('chemistry')" class="subject-card p-8 rounded-3xl text-center">
+            <div class="text-5xl mb-4">🧪</div>
+            <h3 class="text-2xl font-bold">الكيمياء</h3>
+        </div>
+        <div onclick="goToExams('french')" class="subject-card p-8 rounded-3xl text-center">
+            <div class="text-5xl mb-4">🇫🇷</div>
+            <h3 class="text-2xl font-bold">فرنساوي</h3>
+        </div>
+        <div onclick="goToExams('geology')" class="subject-card p-8 rounded-3xl text-center">
+            <div class="text-5xl mb-4">🌋</div>
+            <h3 class="text-2xl font-bold">جيولوجيا</h3>
+        </div>
+    </div>
 
-    <script src="main.js"></script>
+    <script>
+        function goToExams(subject) {
+            localStorage.setItem('selectedSubject', subject);
+            window.location.href = 'subject-exams.html';
+        }
+    </script>
 </body>
 </html>
+
