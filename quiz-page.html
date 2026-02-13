@@ -2,58 +2,137 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Full Mark | الامتحان</title>
+    <title>Full Mark | نظام البابل شيت</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;700&display=swap" rel="stylesheet">
     <style>
         .selected { background: #f59e0b !important; color: #020617 !important; border-color: #f59e0b !important; }
+        .grid-answered { background: #f59e0b; color: #020617; border-color: #f59e0b; }
+        .grid-skipped { background: #ef4444; color: white; border-color: #ef4444; }
+        .grid-normal { background: #1e293b; color: #94a3b8; border-color: #334155; }
+        /* تصميم النافذة المنبثقة */
+        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 100; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="bg-slate-950 text-white p-4 font-['Readex_Pro']">
-    <div class="max-w-3xl mx-auto">
-        <div class="flex justify-between p-6 bg-slate-900 rounded-2xl mb-6 border border-slate-800">
-            <div id="timer" class="text-2xl font-bold text-amber-500">50:00</div>
-            <div id="prog" class="text-slate-400 font-bold">1 / 20</div>
-        </div>
-        <div class="bg-slate-900 p-8 rounded-[2.5rem] border border-slate-800 shadow-2xl min-h-[400px]">
-            <h2 id="q" class="text-2xl font-bold mb-10 leading-relaxed"></h2>
-            <div id="opts" class="grid gap-4"></div>
-            <div class="flex justify-between mt-12">
-                <button onclick="prev()" class="px-8 py-3 bg-slate-800 rounded-2xl font-bold hover:bg-slate-700">السابق</button>
-                <button onclick="next()" id="btn" class="px-8 py-3 bg-amber-500 text-slate-900 font-bold rounded-2xl">التالي</button>
+
+    <div id="modal">
+        <div class="bg-slate-900 p-8 rounded-[2rem] border border-slate-800 max-w-sm w-full text-center">
+            <div class="text-5xl mb-4">🌟</div>
+            <h2 class="text-2xl font-bold mb-4">عارفين إنك شاطر..</h2>
+            <p class="text-slate-400 mb-8">راجع إجاباتك كويس قبل ما تسلم، بالتوفيق يا بطل!</p>
+            <div class="flex gap-4">
+                <button onclick="closeModal()" class="flex-1 py-3 bg-slate-800 rounded-xl font-bold">رجوع</button>
+                <button onclick="finalSubmit()" class="flex-1 py-3 bg-amber-500 text-slate-900 rounded-xl font-bold">تسليم على طول</button>
             </div>
         </div>
     </div>
+
+    <div class="max-w-3xl mx-auto">
+        <div class="flex justify-between p-6 bg-slate-900 rounded-2xl mb-6 border border-slate-800">
+            <div id="timer" class="text-2xl font-bold text-amber-500">50:00</div>
+            <div id="prog" class="text-slate-400 font-bold tracking-widest">1 / 20</div>
+        </div>
+
+        <div class="bg-slate-900 p-8 rounded-[2.5rem] border border-slate-800 shadow-2xl min-h-[400px] relative">
+            <h2 id="q" class="text-2xl font-bold mb-10 leading-relaxed"></h2>
+            <div id="opts" class="grid gap-4 mb-20"></div>
+
+            <div class="flex justify-between mt-12">
+                <button onclick="prev()" class="px-8 py-3 bg-slate-800 rounded-2xl font-bold hover:bg-slate-700">السابق</button>
+                <button onclick="next()" id="btn-next" class="px-8 py-3 bg-amber-500 text-slate-900 font-bold rounded-2xl">التالي</button>
+            </div>
+        </div>
+
+        <div class="mt-8 p-6 bg-slate-900 rounded-3xl border border-slate-800">
+            <h3 class="text-sm font-bold text-slate-500 mb-4 text-center">لوحة الأسئلة (Bubble Sheet)</h3>
+            <div id="question-grid" class="flex flex-wrap justify-center gap-2">
+                </div>
+            
+            <button id="submit-exam-btn" onclick="openModal()" disabled class="w-full mt-8 py-4 bg-slate-800 text-slate-500 rounded-2xl font-black text-xl transition-all cursor-not-allowed">
+                تسليم الامتحان
+            </button>
+        </div>
+    </div>
+
     <script>
         const exam = JSON.parse(localStorage.getItem('currentExam'));
         let idx = 0;
         let ans = new Array(exam.questions.length).fill(null);
+        let visited = new Array(exam.questions.length).fill(false);
+        visited[0] = true;
         let time = 50 * 60;
 
+        // التايمر
         setInterval(() => {
-            if(time <= 0) finish();
+            if(time <= 0) finalSubmit();
             time--;
             let m = Math.floor(time/60); let s = time%60;
             document.getElementById('timer').innerText = `${m}:${s < 10 ? '0'+s : s}`;
         }, 1000);
 
-        function show() {
+        function render() {
             const curr = exam.questions[idx];
             document.getElementById('q').innerText = curr.q;
             document.getElementById('prog').innerText = `${idx + 1} / ${exam.questions.length}`;
+            
+            // خيارات السؤال
             let html = '';
             curr.options.forEach((o, i) => {
                 html += `<button onclick="sel(${i})" class="w-full text-right p-5 rounded-2xl border border-slate-800 bg-slate-950/50 hover:border-amber-500 transition-all ${ans[idx] === i ? 'selected' : ''}">${i+1}- ${o}</button>`;
             });
             document.getElementById('opts').innerHTML = html;
-            document.getElementById('btn').innerText = idx === exam.questions.length - 1 ? 'إنهاء' : 'التالي';
+
+            renderGrid();
+            checkCompletion();
         }
 
-        function sel(i) { ans[idx] = i; show(); }
-        function next() { if(idx < exam.questions.length - 1) { idx++; show(); } else finish(); }
-        function prev() { if(idx > 0) { idx--; show(); } }
-        function finish() { localStorage.setItem('results', JSON.stringify(ans)); window.location.href = 'result.html'; }
-        show();
+        // رسم لوحة أرقام الأسئلة
+        function renderGrid() {
+            let gridHtml = '';
+            for(let i=0; i<exam.questions.length; i++) {
+                let statusClass = 'grid-normal';
+                if (ans[i] !== null) statusClass = 'grid-answered';
+                else if (visited[i]) statusClass = 'grid-skipped';
+                
+                // إضافة تمييز للسؤال الحالي
+                let borderStyle = (i === idx) ? 'border-2 border-white scale-110' : 'border border-slate-700';
+                
+                gridHtml += `<div class="w-10 h-10 flex items-center justify-center rounded-lg font-bold text-sm transition-all ${statusClass} ${borderStyle}">${i+1}</div>`;
+            }
+            document.getElementById('question-grid').innerHTML = gridHtml;
+        }
+
+        // التحقق هل خلص كل الأسئلة؟
+        function checkCompletion() {
+            const isFinished = ans.every(a => a !== null);
+            const btn = document.getElementById('submit-exam-btn');
+            if(isFinished) {
+                btn.disabled = false;
+                btn.classList.remove('bg-slate-800', 'text-slate-500', 'cursor-not-allowed');
+                btn.classList.add('bg-green-600', 'text-white', 'hover:bg-green-500');
+            }
+        }
+
+        function sel(i) { ans[idx] = i; render(); }
+        function next() { 
+            if(idx < exam.questions.length - 1) { 
+                idx++; 
+                visited[idx] = true; 
+                render(); 
+            } 
+        }
+        function prev() { if(idx > 0) { idx--; render(); } }
+
+        // وظائف النافذة المنبثقة
+        function openModal() { document.getElementById('modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+        function finalSubmit() { 
+            localStorage.setItem('results', JSON.stringify(ans)); 
+            window.location.href = 'result.html'; 
+        }
+
+        render();
     </script>
 </body>
 </html>
