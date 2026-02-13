@@ -3,29 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Full Mark Exam</title>
+    <title>Full Mark Exam | طريقك للدرجة النهائية</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@700;900&display=swap');
-        body { font-family: 'Cairo', sans-serif; }
+        body { font-family: 'Cairo', sans-serif; background-color: #020617; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(250, 204, 21, 0.1);
+            border-color: #facc15;
+            transform: translateY(-10px);
+        }
+        .text-gradient {
+            background: linear-gradient(to right, #facc15, #eab308);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
-<body class="bg-slate-950 text-white">
-    <div class="flex items-center justify-center p-6">
-        <h1 class="text-5xl font-black text-yellow-400 drop-shadow-lg">Full Mark Exam</h1>
-    </div>
+<body class="text-white overflow-x-hidden">
 
-    <div class="text-center mt-10">
-        <h2 class="text-6xl font-black">يلا امتحن <span class="text-yellow-400">دلوقتي</span> 🔥</h2>
-    </div>
+    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="text-3xl font-900 text-gradient tracking-tighter">FULL MARK EXAM</div>
+        <div class="bg-yellow-400 text-black px-4 py-1 rounded-full text-sm font-bold animate-pulse">النظام الحديث 2026</div>
+    </nav>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 p-10">
-        <div class="bg-yellow-400 p-8 rounded-3xl text-slate-900 text-center cursor-pointer hover:scale-105 transition-all outline-dashed outline-offset-8 outline-yellow-400">
-            <h3 class="text-4xl font-black mb-4">اللغة العربية</h3>
-            <p class="font-bold">كل وحدات المنهج + شوامل</p>
-            <div class="mt-6 bg-slate-900 text-white py-2 rounded-xl font-bold">ابدأ الامتحان</div>
-        </div>
-        
-        </div>
+    <header class="text-center py-16 px-4">
+        <h1 class="text-5xl md:text-7xl font-900 mb-6">يلا امتحن <span class="text-yellow-400">دلوقتي</span> 🔥</h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto">
+            منصة "Full Mark" تضعك على طريق الدرجة النهائية من خلال امتحانات شاملة تحاكي امتحان نهاية العام.
+        </p>
+    </header>
+
+    <section class="max-w-7xl mx-auto px-6 pb-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                <div class="absolute -right-4 -top-4 text-9xl opacity-5 group-hover:opacity-10 transition-opacity">ع</div>
+                <h3 class="text-3xl font-bold mb-2">اللغة العربية</h3>
+                <p class="text-gray-400 mb-6 text-sm">كل وحدات المنهج + شوامل الوزارة</p>
+                <a href="/arabic-exam" class="block text-center bg-yellow-400 text-black font-bold py-3 rounded-xl hover:bg-yellow-500 transition-colors">ابدأ الامتحان الآن</a>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group border-l-4 border-l-yellow-400">
+                <div class="absolute -right-4 -top-4 text-9xl opacity-5 group-hover:opacity-10 transition-opacity">K</div>
+                <h3 class="text-3xl font-bold mb-2">الكيمياء</h3>
+                <p class="text-gray-400 mb-6 text-sm">الخمس أبواب + مفاهيم الكيمياء</p>
+                <a href="/chem-exam" class="block text-center border-2 border-yellow-400 text-yellow-400 font-bold py-3 rounded-xl hover:bg-yellow-400 hover:text-black transition-all">فتح الامتحانات</a>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                <div class="absolute -right-4 -top-4 text-9xl opacity-5 group-hover:opacity-10 transition-opacity">P</div>
+                <h3 class="text-3xl font-bold mb-2">الفيزياء</h3>
+                <p class="text-gray-400 mb-6 text-sm">كلاسيكية وحديثة - نظام مطور</p>
+                <a href="/phys-exam" class="block text-center bg-white text-black font-bold py-3 rounded-xl hover:bg-yellow-400 transition-all">ابدأ الآن</a>
+            </div>
+
+            <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                <h3 class="text-3xl font-bold mb-2 text-yellow-400">English</h3>
+                <p class="text-gray-400 mb-6 text-sm">All Units + Skills & Drama</p>
+                <a href="/en-exam" class="block text-center bg-slate-800 text-white font-bold py-3 rounded-xl hover:bg-yellow-400 hover:text-black transition-all">Start Quiz</a>
+            </div>
+
+            </div>
+    </section>
+
+    <footer class="text-center py-10 border-t border-white/5 text-gray-500 text-sm">
+        جميع الحقوق محفوظة لمنصة Full Mark Exam &copy; 2026
+    </footer>
+
 </body>
 </html>
